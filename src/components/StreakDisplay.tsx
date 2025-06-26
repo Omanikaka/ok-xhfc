@@ -4,7 +4,8 @@ import { useTheme } from "@/hooks/useTheme";
 import { useStorage } from "@/hooks/useStorage";
 import { Calendar } from "@/components/ui/calendar";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { format, isSameDay, startOfMonth, endOfMonth, eachDayOfInterval } from "date-fns";
+import { format, isSameDay, startOfMonth, endOfMonth, eachDayOfInterval, addDays, subDays } from "date-fns";
+import { Button } from "@/components/ui/button";
 
 export const StreakDisplay = () => {
   const { isDark } = useTheme();
@@ -22,6 +23,16 @@ export const StreakDisplay = () => {
       const newStreakDates = [...streakDates, today];
       setStreak(prev => prev + 1);
       setLastStudyDate(today);
+      setStreakDates(newStreakDates);
+    }
+  };
+
+  const goToNextDay = () => {
+    const nextDay = addDays(new Date(), 1).toDateString();
+    if (!streakDates.includes(nextDay)) {
+      const newStreakDates = [...streakDates, nextDay];
+      setStreak(prev => prev + 1);
+      setLastStudyDate(nextDay);
       setStreakDates(newStreakDates);
     }
   };
@@ -71,18 +82,32 @@ export const StreakDisplay = () => {
              streak === 1 ? "Day" : "Days"}
           </p>
           
-          {shouldUpdateStreak && (
-            <button
-              onClick={updateStreak}
-              className={`px-4 py-2 rounded-lg backdrop-blur-sm transition-colors ${
+          <div className="space-y-2">
+            {shouldUpdateStreak && (
+              <Button
+                onClick={updateStreak}
+                className={`w-full backdrop-blur-sm transition-colors ${
+                  isDark 
+                    ? "bg-yellow-400 text-black hover:bg-yellow-500" 
+                    : "bg-gray-800 text-white hover:bg-gray-900"
+                }`}
+              >
+                Mark Today Complete
+              </Button>
+            )}
+            
+            <Button
+              onClick={goToNextDay}
+              variant="outline"
+              className={`w-full backdrop-blur-sm transition-colors ${
                 isDark 
-                  ? "bg-yellow-400 text-black hover:bg-yellow-500" 
-                  : "bg-gray-800 text-white hover:bg-gray-900"
+                  ? "border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black" 
+                  : "border-gray-300 text-gray-600 hover:bg-gray-100"
               }`}
             >
-              Mark Today Complete
-            </button>
-          )}
+              Go to Next Day
+            </Button>
+          </div>
         </div>
 
         {/* Calendar */}
