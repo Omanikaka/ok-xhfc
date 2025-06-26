@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useTheme } from "@/hooks/useTheme";
 import { useStorage } from "@/hooks/useStorage";
@@ -28,13 +27,15 @@ export const StreakDisplay = () => {
   };
 
   const goToNextDay = () => {
-    const nextDay = addDays(new Date(), 1).toDateString();
-    if (!streakDates.includes(nextDay)) {
-      const newStreakDates = [...streakDates, nextDay];
-      setStreak(prev => prev + 1);
-      setLastStudyDate(nextDay);
-      setStreakDates(newStreakDates);
-    }
+    // Get the last study date or today if no last study date
+    const lastDate = lastStudyDate ? new Date(lastStudyDate) : new Date();
+    const nextDay = addDays(lastDate, 1).toDateString();
+    
+    // Always add the next day and increment streak
+    const newStreakDates = [...streakDates, nextDay];
+    setStreak(prev => prev + 1);
+    setLastStudyDate(nextDay);
+    setStreakDates(newStreakDates);
   };
 
   // Get days that have streaks for the calendar
