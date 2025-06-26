@@ -42,9 +42,11 @@ export const SpinWheel = () => {
   };
 
   return (
-    <div className={`p-6 rounded-xl border-2 ${
-      isDark ? "bg-black/50 border-yellow-400/20" : "bg-white border-gray-200"
-    } shadow-lg`}>
+    <div className={`p-6 rounded-xl border-2 backdrop-blur-lg ${
+      isDark 
+        ? "bg-black/30 border-yellow-400/30 shadow-2xl shadow-yellow-400/20" 
+        : "bg-white/30 border-gray-200/30 shadow-2xl shadow-gray-400/20"
+    }`}>
       <h2 className={`text-2xl font-bold text-center mb-6 ${
         isDark ? "text-yellow-400" : "text-gray-800"
       }`}>
@@ -52,29 +54,64 @@ export const SpinWheel = () => {
       </h2>
       
       <div className="relative w-64 h-64 mx-auto mb-6">
-        <div 
-          className="w-full h-full rounded-full border-4 border-yellow-400 relative overflow-hidden transition-transform duration-3000 ease-out"
+        <svg 
+          className="w-full h-full transition-transform duration-3000 ease-out"
           style={{ transform: `rotate(${rotation}deg)` }}
+          viewBox="0 0 200 200"
         >
           {subjects.map((subject, index) => {
             const angle = (360 / subjects.length) * index;
+            const nextAngle = (360 / subjects.length) * (index + 1);
+            
+            // Calculate path for each slice
+            const startAngle = (angle - 90) * (Math.PI / 180);
+            const endAngle = (nextAngle - 90) * (Math.PI / 180);
+            
+            const x1 = 100 + 90 * Math.cos(startAngle);
+            const y1 = 100 + 90 * Math.sin(startAngle);
+            const x2 = 100 + 90 * Math.cos(endAngle);
+            const y2 = 100 + 90 * Math.sin(endAngle);
+            
+            const largeArcFlag = nextAngle - angle > 180 ? 1 : 0;
+            
+            const pathData = [
+              `M 100 100`,
+              `L ${x1} ${y1}`,
+              `A 90 90 0 ${largeArcFlag} 1 ${x2} ${y2}`,
+              `Z`
+            ].join(' ');
+            
+            // Calculate text position
+            const textAngle = (angle + nextAngle) / 2;
+            const textAngleRad = (textAngle - 90) * (Math.PI / 180);
+            const textX = 100 + 60 * Math.cos(textAngleRad);
+            const textY = 100 + 60 * Math.sin(textAngleRad);
+            
             return (
-              <div
-                key={subject.name}
-                className="absolute inset-0 flex items-center justify-center text-black font-bold text-sm"
-                style={{
-                  background: `conic-gradient(from ${angle}deg, ${subject.color} 0deg, ${subject.color} ${360/subjects.length}deg, transparent ${360/subjects.length}deg)`,
-                  clipPath: `polygon(50% 50%, 50% 0%, ${50 + 50 * Math.cos((angle + 360/subjects.length) * Math.PI / 180)}% ${50 + 50 * Math.sin((angle + 360/subjects.length) * Math.PI / 180)}%, ${50 + 50 * Math.cos(angle * Math.PI / 180)}% ${50 + 50 * Math.sin(angle * Math.PI / 180)}%)`,
-                  transform: `rotate(${angle}deg)`,
-                }}
-              >
-                <span className="transform -rotate-45 text-xs p-2">
+              <g key={subject.name}>
+                <path
+                  d={pathData}
+                  fill={subject.color}
+                  stroke="#fff"
+                  strokeWidth="2"
+                />
+                <text
+                  x={textX}
+                  y={textY}
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  className="text-xs font-bold fill-black"
+                  transform={`rotate(${textAngle}, ${textX}, ${textY})`}
+                >
                   {subject.name}
-                </span>
-              </div>
+                </text>
+              </g>
             );
           })}
-        </div>
+          
+          {/* Center circle */}
+          <circle cx="100" cy="100" r="15" fill="#fff" stroke="#333" strokeWidth="2" />
+        </svg>
         
         {/* Pointer */}
         <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-2">
@@ -92,7 +129,7 @@ export const SpinWheel = () => {
             isDark 
               ? "bg-yellow-400 text-black hover:bg-yellow-500" 
               : "bg-gray-800 text-white hover:bg-gray-900"
-          } px-8 py-3 text-lg font-semibold`}
+          } px-8 py-3 text-lg font-semibold backdrop-blur-sm`}
         >
           {spinning ? "Spinning..." : "Spin the Wheel!"}
         </Button>

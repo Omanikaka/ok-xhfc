@@ -18,7 +18,9 @@ const Index = () => {
 
   return (
     <div className={`min-h-screen transition-colors duration-300 ${
-      isDark ? "bg-black text-yellow-400" : "bg-white text-gray-800"
+      isDark 
+        ? "bg-gradient-to-br from-black via-gray-900 to-black text-yellow-400" 
+        : "bg-gradient-to-br from-white via-gray-50 to-white text-gray-800"
     }`}>
       <Header activeTab={activeTab} setActiveTab={setActiveTab} />
       

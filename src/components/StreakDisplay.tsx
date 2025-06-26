@@ -19,9 +19,11 @@ export const StreakDisplay = () => {
   };
 
   return (
-    <div className={`p-6 rounded-xl border-2 ${
-      isDark ? "bg-black/50 border-yellow-400/20" : "bg-white border-gray-200"
-    } shadow-lg text-center`}>
+    <div className={`p-6 rounded-xl border-2 text-center backdrop-blur-lg ${
+      isDark 
+        ? "bg-black/30 border-yellow-400/30 shadow-2xl shadow-yellow-400/20" 
+        : "bg-white/30 border-gray-200/30 shadow-2xl shadow-gray-400/20"
+    }`}>
       <h2 className={`text-2xl font-bold mb-4 ${
         isDark ? "text-yellow-400" : "text-gray-800"
       }`}>
@@ -44,7 +46,7 @@ export const StreakDisplay = () => {
       {shouldUpdateStreak && (
         <button
           onClick={updateStreak}
-          className={`mt-4 px-4 py-2 rounded-lg ${
+          className={`mt-4 px-4 py-2 rounded-lg backdrop-blur-sm ${
             isDark 
               ? "bg-yellow-400 text-black hover:bg-yellow-500" 
               : "bg-gray-800 text-white hover:bg-gray-900"
