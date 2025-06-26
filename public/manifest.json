@@ -1,0 +1,20 @@
+
+{
+  "name": "Islamic Tracker",
+  "short_name": "Islamic Tracker",
+  "description": "Track your Islamic studies, prayers, and academic progress",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#facc15",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48 32x32 16x16",
+      "type": "image/x-icon"
+    }
+  ],
+  "categories": ["productivity", "lifestyle", "education"],
+  "lang": "en"
+}
