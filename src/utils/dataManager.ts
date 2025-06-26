@@ -126,13 +126,13 @@ export const getAllData = (): AppData => {
     'workout-count',
     'daily-study',
     'theme'
-  ];
+  ] as const;
   
   keys.forEach(key => {
     try {
       const value = localStorage.getItem(key);
       if (value) {
-        data[key as keyof AppData] = JSON.parse(value);
+        (data as any)[key] = JSON.parse(value);
       }
     } catch (error) {
       console.error(`Error getting ${key}:`, error);
