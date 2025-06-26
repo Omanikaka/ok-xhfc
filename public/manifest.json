@@ -16,5 +16,7 @@
     }
   ],
   "categories": ["productivity", "lifestyle", "education"],
-  "lang": "en"
+  "lang": "en",
+  "scope": "/",
+  "prefer_related_applications": false
 }
