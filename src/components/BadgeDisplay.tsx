@@ -18,6 +18,7 @@ export const BadgeDisplay = () => {
     Maghrib: 0,
     Isha: 0,
   });
+  const [workoutCount] = useStorage("workout-count", 0);
 
   const totalPrayers = Object.values(prayerCounts).reduce((sum, count) => sum + count, 0);
   const completedSubjects = Object.entries(progress).filter(([key, value]) => {
@@ -25,7 +26,14 @@ export const BadgeDisplay = () => {
     return value >= totalChapters;
   }).length;
 
+  const totalChaptersCompleted = Object.values(progress).reduce((sum, chapters) => sum + chapters, 0);
+  const fiqhProgress = progress["Fiqh"];
+  const lisanProgress = progress["Lisan ul Quran"];
+  const thareeqhProgress = progress["Thareeqh"];
+  const duroosProgress = progress["Duroos ul Ihsan"];
+
   const badges = [
+    // Original badges
     {
       name: "First Steps",
       description: "Complete your first chapter",
@@ -79,6 +87,127 @@ export const BadgeDisplay = () => {
       description: "Complete all subjects",
       earned: completedSubjects >= 4,
       icon: "🌟"
+    },
+    // 20 New badges
+    {
+      name: "Early Bird",
+      description: "Complete 10 Fajr prayers",
+      earned: prayerCounts.Fajr >= 10,
+      icon: "🌅"
+    },
+    {
+      name: "Fiqh Explorer",
+      description: "Complete 5 Fiqh chapters",
+      earned: fiqhProgress >= 5,
+      icon: "⚖️"
+    },
+    {
+      name: "Arabic Student",
+      description: "Complete 3 Lisan ul Quran chapters",
+      earned: lisanProgress >= 3,
+      icon: "🔤"
+    },
+    {
+      name: "History Buff",
+      description: "Complete 5 Thareeqh chapters",
+      earned: thareeqhProgress >= 5,
+      icon: "📜"
+    },
+    {
+      name: "Spiritual Guide",
+      description: "Complete 3 Duroos ul Ihsan chapters",
+      earned: duroosProgress >= 3,
+      icon: "🧘"
+    },
+    {
+      name: "Marathon Learner",
+      description: "Complete 25 total chapters",
+      earned: totalChaptersCompleted >= 25,
+      icon: "🏃"
+    },
+    {
+      name: "Fitness Enthusiast",
+      description: "Complete 10 workouts",
+      earned: workoutCount >= 10,
+      icon: "💪"
+    },
+    {
+      name: "Week Warrior",
+      description: "Maintain a 14-day streak",
+      earned: streak >= 14,
+      icon: "⚔️"
+    },
+    {
+      name: "Prayer Guardian",
+      description: "Complete 100 prayers",
+      earned: totalPrayers >= 100,
+      icon: "🛡️"
+    },
+    {
+      name: "Dawn Champion",
+      description: "Complete 25 Fajr prayers",
+      earned: prayerCounts.Fajr >= 25,
+      icon: "🌄"
+    },
+    {
+      name: "Midday Hero",
+      description: "Complete 25 Dhuhr prayers",
+      earned: prayerCounts.Dhuhr >= 25,
+      icon: "☀️"
+    },
+    {
+      name: "Afternoon Star",
+      description: "Complete 25 Asr prayers",
+      earned: prayerCounts.Asr >= 25,
+      icon: "🌇"
+    },
+    {
+      name: "Sunset Devotee",
+      description: "Complete 25 Maghrib prayers",
+      earned: prayerCounts.Maghrib >= 25,
+      icon: "🌆"
+    },
+    {
+      name: "Night Guardian",
+      description: "Complete 25 Isha prayers",
+      earned: prayerCounts.Isha >= 25,
+      icon: "🌙"
+    },
+    {
+      name: "Athletic Spirit",
+      description: "Complete 25 workouts",
+      earned: workoutCount >= 25,
+      icon: "🏋️"
+    },
+    {
+      name: "Chapter Master",
+      description: "Complete 50 total chapters",
+      earned: totalChaptersCompleted >= 50,
+      icon: "📚"
+    },
+    {
+      name: "Streak Legend",
+      description: "Maintain a 50-day streak",
+      earned: streak >= 50,
+      icon: "🔥"
+    },
+    {
+      name: "Prayer Perfectionist",
+      description: "Complete 300 prayers",
+      earned: totalPrayers >= 300,
+      icon: "✨"
+    },
+    {
+      name: "Ultimate Scholar",
+      description: "Complete 3 subjects",
+      earned: completedSubjects >= 3,
+      icon: "👑"
+    },
+    {
+      name: "Fitness Champion",
+      description: "Complete 50 workouts",
+      earned: workoutCount >= 50,
+      icon: "🥇"
     }
   ];
 
@@ -96,7 +225,7 @@ export const BadgeDisplay = () => {
         Badges ({earnedBadges.length}/{badges.length})
       </h2>
       
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-3 gap-3 max-h-96 overflow-y-auto">
         {badges.map((badge) => (
           <div
             key={badge.name}
