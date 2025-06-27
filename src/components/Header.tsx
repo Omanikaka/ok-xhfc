@@ -1,48 +1,52 @@
 
-import { Button } from "@/components/ui/button";
-import { Settings, BookOpen, GraduationCap } from "lucide-react";
 import { useTheme } from "@/hooks/useTheme";
+import { Moon, Sun, Settings } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { DownloadApp } from "./DownloadApp";
 
 interface HeaderProps {
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
+  onOpenSettings: () => void;
 }
 
-export const Header = ({ activeTab, setActiveTab }: HeaderProps) => {
-  const { isDark } = useTheme();
-
-  const tabs = [
-    { id: "dashboard", label: "Dashboard", icon: BookOpen },
-    { id: "academics", label: "Academics", icon: GraduationCap },
-    { id: "settings", label: "Settings", icon: Settings },
-  ];
+export const Header = ({ onOpenSettings }: HeaderProps) => {
+  const { isDark, toggleTheme } = useTheme();
 
   return (
-    <header className={`border-b-2 ${
-      isDark ? "border-yellow-400/20 bg-black/50" : "border-gray-200 bg-white/50"
-    } backdrop-blur-sm sticky top-0 z-50`}>
-      <div className="container mx-auto px-4 py-4">
-        <nav className="flex justify-center space-x-1">
-          {tabs.map(({ id, label, icon: Icon }) => (
+    <header className={`sticky top-0 z-40 w-full border-b backdrop-blur supports-[backdrop-filter]:bg-background/60 ${
+      isDark ? "bg-gray-900/80" : "bg-white/80"
+    }`}>
+      <div className="container mx-auto px-4">
+        <div className="flex h-16 items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <h1 className="text-xl font-bold bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
+              Islamic Tracker
+            </h1>
+          </div>
+          
+          <div className="flex items-center space-x-2">
+            <DownloadApp />
             <Button
-              key={id}
-              variant={activeTab === id ? "default" : "ghost"}
-              onClick={() => setActiveTab(id)}
-              className={`${
-                activeTab === id
-                  ? isDark
-                    ? "bg-yellow-400 text-black hover:bg-yellow-500"
-                    : "bg-gray-800 text-white hover:bg-gray-900"
-                  : isDark
-                  ? "text-yellow-400 hover:bg-yellow-400/10"
-                  : "text-gray-600 hover:bg-gray-100"
-              } transition-all duration-200`}
+              variant="ghost"
+              size="sm"
+              onClick={toggleTheme}
+              className="h-9 w-9 p-0"
             >
-              <Icon className="w-4 h-4 mr-2" />
-              {label}
+              {isDark ? (
+                <Sun className="h-4 w-4" />
+              ) : (
+                <Moon className="h-4 w-4" />
+              )}
             </Button>
-          ))}
-        </nav>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onOpenSettings}
+              className="h-9 w-9 p-0"
+            >
+              <Settings className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
       </div>
     </header>
   );

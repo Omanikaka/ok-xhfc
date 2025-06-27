@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Header } from "@/components/Header";
@@ -11,18 +10,19 @@ import { StreakDisplay } from "@/components/StreakDisplay";
 import { BadgeDisplay } from "@/components/BadgeDisplay";
 import { Settings } from "@/components/Settings";
 import { useTheme } from "@/hooks/useTheme";
+import { OfflineIndicator } from "@/components/OfflineIndicator";
 
 const Index = () => {
   const { isDark } = useTheme();
   const [activeTab, setActiveTab] = useState("dashboard");
+  const [showSettings, setShowSettings] = useState(false);
 
   return (
     <div className={`min-h-screen transition-colors duration-300 ${
-      isDark 
-        ? "bg-gradient-to-br from-black via-gray-900 to-black text-yellow-400" 
-        : "bg-gradient-to-br from-white via-gray-50 to-white text-gray-800"
+      isDark ? "bg-gray-900 text-white" : "bg-gray-50 text-gray-900"
     }`}>
-      <Header activeTab={activeTab} setActiveTab={setActiveTab} />
+      <OfflineIndicator />
+      <Header onOpenSettings={() => setShowSettings(true)} />
       
       <main className="container mx-auto px-4 py-6">
         {activeTab === "dashboard" && (
