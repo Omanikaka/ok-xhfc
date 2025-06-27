@@ -2,7 +2,6 @@
 import { useTheme } from "@/hooks/useTheme";
 import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { DownloadApp } from "./DownloadApp";
 
 export const Header = () => {
   const { isDark, toggleTheme } = useTheme();
@@ -20,7 +19,6 @@ export const Header = () => {
           </div>
           
           <div className="flex items-center space-x-2">
-            <DownloadApp />
             <Button
               variant="ghost"
               size="sm"
