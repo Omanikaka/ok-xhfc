@@ -11,8 +11,6 @@ import { StreakDisplay } from "@/components/StreakDisplay";
 import { BadgeDisplay } from "@/components/BadgeDisplay";
 import { Settings } from "@/components/Settings";
 import { useTheme } from "@/hooks/useTheme";
-import { OfflineIndicator } from "@/components/OfflineIndicator";
-import { Button } from "@/components/ui/button";
 
 const Index = () => {
   const { isDark } = useTheme();
@@ -20,41 +18,11 @@ const Index = () => {
 
   return (
     <div className={`min-h-screen transition-colors duration-300 ${
-      isDark ? "bg-gray-900 text-white" : "bg-gray-50 text-gray-900"
+      isDark 
+        ? "bg-gradient-to-br from-black via-gray-900 to-black text-yellow-400" 
+        : "bg-gradient-to-br from-white via-gray-50 to-white text-gray-800"
     }`}>
-      <OfflineIndicator />
-      <Header />
-      
-      {/* Navigation Tabs */}
-      <div className={`sticky top-16 z-30 w-full border-b backdrop-blur supports-[backdrop-filter]:bg-background/60 ${
-        isDark ? "bg-gray-900/80" : "bg-white/80"
-      }`}>
-        <div className="container mx-auto px-4">
-          <div className="flex space-x-1">
-            <Button
-              variant={activeTab === "dashboard" ? "default" : "ghost"}
-              onClick={() => setActiveTab("dashboard")}
-              className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary"
-            >
-              Dashboard
-            </Button>
-            <Button
-              variant={activeTab === "academics" ? "default" : "ghost"}
-              onClick={() => setActiveTab("academics")}
-              className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary"
-            >
-              Academics
-            </Button>
-            <Button
-              variant={activeTab === "settings" ? "default" : "ghost"}
-              onClick={() => setActiveTab("settings")}
-              className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary"
-            >
-              Settings
-            </Button>
-          </div>
-        </div>
-      </div>
+      <Header activeTab={activeTab} setActiveTab={setActiveTab} />
       
       <main className="container mx-auto px-4 py-6">
         {activeTab === "dashboard" && (
