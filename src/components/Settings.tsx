@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useTheme } from "@/hooks/useTheme";
 import { exportDataAsPDF, importData } from "@/utils/dataManager";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { DownloadApp } from "./DownloadApp";
 
 export const Settings = () => {
   const { isDark, toggleTheme } = useTheme();
@@ -46,6 +47,20 @@ export const Settings = () => {
       </h2>
       
       <div className="space-y-6">
+        <div>
+          <h3 className={`text-lg font-semibold mb-3 ${
+            isDark ? "text-yellow-300" : "text-gray-700"
+          }`}>
+            App Installation
+          </h3>
+          <div className="flex items-center justify-between">
+            <span className={isDark ? "text-yellow-400/70" : "text-gray-600"}>
+              Install this app on your device for offline access and better performance.
+            </span>
+            <DownloadApp />
+          </div>
+        </div>
+
         <div>
           <h3 className={`text-lg font-semibold mb-3 ${
             isDark ? "text-yellow-300" : "text-gray-700"

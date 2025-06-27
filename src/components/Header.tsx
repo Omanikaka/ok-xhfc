@@ -1,14 +1,10 @@
 
 import { useTheme } from "@/hooks/useTheme";
-import { Moon, Sun, Settings } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DownloadApp } from "./DownloadApp";
 
-interface HeaderProps {
-  onOpenSettings: () => void;
-}
-
-export const Header = ({ onOpenSettings }: HeaderProps) => {
+export const Header = () => {
   const { isDark, toggleTheme } = useTheme();
 
   return (
@@ -36,14 +32,6 @@ export const Header = ({ onOpenSettings }: HeaderProps) => {
               ) : (
                 <Moon className="h-4 w-4" />
               )}
-            </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={onOpenSettings}
-              className="h-9 w-9 p-0"
-            >
-              <Settings className="h-4 w-4" />
             </Button>
           </div>
         </div>
